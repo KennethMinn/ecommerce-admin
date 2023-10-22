@@ -20,6 +20,11 @@ import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import AlertModal from '@/components/modals/alert-modal';
+import axios from 'axios';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -32,20 +37,53 @@ interface SettingFormProps {
 }
 
 const SettingForm = ({ initialValues }: SettingFormProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const params = useParams();
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      setIsLoading(true);
+      await axios.patch(`/api/stores/${params.storeId}`, values);
+      router.refresh();
+      toast.success('Store Updated Successfully!');
+    } catch (error) {
+      toast.success('Something went wrong');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const onDelete = async () => {
+    try {
+      setIsLoading(true);
+      await axios.delete(`/api/stores/${params.storeId}`);
+      router.refresh();
+      router.push('/'); //  '/' route will check if the storeId exists;
+      toast.success('Store Deleted Successfully!');
+    } catch (error) {
+      toast.error('Something went wrong');
+    } finally {
+      setIsLoading(false);
+      setOpen(false);
+    }
+  };
 
   return (
     <>
+      <AlertModal
+        loading={isLoading}
+        onClose={() => setOpen(false)}
+        onConfirm={onDelete}
+        open={open}
+      />
       <div className=" flex items-center justify-between">
         <Header title="Settings" description="Manage store preferences" />
         <Button
@@ -74,7 +112,7 @@ const SettingForm = ({ initialValues }: SettingFormProps) => {
             )}
           />
           <Button disabled={isLoading} type="submit">
-            Save Changes
+            {isLoading ? 'Saving...' : 'Save Changes'}
           </Button>
         </form>
       </Form>
