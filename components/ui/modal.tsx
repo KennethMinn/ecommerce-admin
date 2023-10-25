@@ -26,8 +26,7 @@ const Modal = ({
 }: ModalProps) => {
   const onChange = (open: boolean) => {
     if (!open) {
-      //  console.log(open)false => !false = true
-      //  console.log(isOpen)true
+      //!open = setOpen(false)
       onClose();
       //  console.log(isOpen)false
     }

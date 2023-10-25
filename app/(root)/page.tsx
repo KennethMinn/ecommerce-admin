@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 export default function Home() {
   const isOpen = useStoreModal(state => state.isOpen);
   const onOpen = useStoreModal(state => state.onOpen);
-  const onClose = useStoreModal(state => state.onClose);
 
   useEffect(() => {
     if (!isOpen) {

@@ -39,7 +39,7 @@ const StoreSwitcher = ({ items = [] }: StoreSwitcherProps) => {
 
   const formattedItems = items.map(item => ({
     label: item.name,
-    value: item.id,
+    value: item.id, //returning new obj array => [{label : value , value : value}]
   }));
 
   const currentStore = formattedItems.find(
@@ -71,7 +71,7 @@ const StoreSwitcher = ({ items = [] }: StoreSwitcherProps) => {
         <Command>
           <CommandList>
             <CommandInput placeholder="Search framework" />
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No Stores found.</CommandEmpty>
             <CommandGroup heading="Stores">
               {formattedItems.map(store => (
                 <CommandItem

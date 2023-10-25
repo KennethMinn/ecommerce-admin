@@ -23,7 +23,7 @@ const Setting = async ({ params }: { params: { storeId: string } }) => {
   }
 
   return (
-    <div className=" p-5">
+    <div className="">
       <SettingForm initialValues={store} />
     </div>
   );

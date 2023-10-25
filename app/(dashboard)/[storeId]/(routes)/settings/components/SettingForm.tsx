@@ -25,6 +25,8 @@ import axios from 'axios';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import ApiAlert from '@/components/ui/api-alert';
+import { useOrigin } from '@/app/hooks/use-origin';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -42,6 +44,7 @@ const SettingForm = ({ initialValues }: SettingFormProps) => {
 
   const params = useParams();
   const router = useRouter();
+  const origin = useOrigin();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -105,7 +108,11 @@ const SettingForm = ({ initialValues }: SettingFormProps) => {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl className=" w-auto">
-                  <Input disabled={isLoading} placeholder="shadcn" {...field} />
+                  <Input
+                    disabled={isLoading}
+                    placeholder="Store name"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -116,6 +123,12 @@ const SettingForm = ({ initialValues }: SettingFormProps) => {
           </Button>
         </form>
       </Form>
+      <Separator className=" my-4" />
+      <ApiAlert
+        title="NEXT_PUBLIC_API_URL"
+        description={`${origin}/api/${params.storeId}`}
+        variant="public"
+      />
     </>
   );
 };
