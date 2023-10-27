@@ -13,15 +13,16 @@ export type BillboardColumns = {
 
 export const columns: ColumnDef<BillboardColumns>[] = [
   {
-    accessorKey: 'label', // to search
+    accessorKey: 'label', // to search and show below header
     header: 'Label', // just a header
   },
   {
-    accessorKey: 'createdAt', // to search
+    accessorKey: 'createdAt', // to search and show header
     header: 'Date', // just a header
   },
   {
     id: 'actions',
     cell: ({ row }) => <CellActions data={row.original} />, //original obj this cell is working with is BillboardColumn obj
+    // we have to add cells duz actions is not inside BillboardColumns or formattedBillboards
   },
 ];

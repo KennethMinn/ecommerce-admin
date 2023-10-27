@@ -14,13 +14,14 @@ export type CategoryColumns = {
 
 export const columns: ColumnDef<CategoryColumns>[] = [
   {
-    accessorKey: 'name', // to search
+    accessorKey: 'name', // to search and show
     header: 'Name', // just a header
   },
   {
-    accessorKey: 'billboard', // to search
+    accessorKey: 'billboard', // to search and show
     header: 'Billboard', // just a header
     cell: ({ row }) => row.original.billboardLabel, // original obj this cell is working with is BillboardColumn obj
+    //we have to add cells duz billboard is not inside BillboardColumns or formattedBillboards
   },
   {
     accessorKey: 'createdAt',
