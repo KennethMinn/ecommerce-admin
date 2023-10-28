@@ -35,7 +35,7 @@ const ImageUpload = ({
 
   return (
     <>
-      <div>
+      <div className=" flex items-center gap-x-6">
         {value.map(url => (
           <div
             key={url}
