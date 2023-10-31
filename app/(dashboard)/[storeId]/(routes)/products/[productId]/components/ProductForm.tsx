@@ -305,7 +305,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     <SelectContent>
                       {colors.map(color => (
                         <SelectItem key={color.id} value={color.id}>
-                          {color.name}
+                          <div className=" flex items-center gap-3">
+                            {color.name}
+                            <div
+                              className=" rounded-full w-5 h-5 border"
+                              style={{ backgroundColor: color.value }}
+                            />
+                          </div>
                         </SelectItem>
                       ))}
                     </SelectContent>
