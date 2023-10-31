@@ -24,16 +24,7 @@ import axios from 'axios';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import ApiAlert from '@/components/ui/api-alert';
-import { useOrigin } from '@/app/hooks/use-origin';
-import {
-  Billboard,
-  Category,
-  Color,
-  Image,
-  Product,
-  Size,
-} from '@prisma/client';
+import { Category, Color, Image, Product, Size } from '@prisma/client';
 import ImageUpload from '@/components/ui/image-upload';
 import {
   Select,
@@ -60,7 +51,7 @@ type ProductFormValues = z.infer<typeof formSchema>;
 interface ProductFormProps {
   initialValues:
     | (Product & {
-        images: Image[];
+        images: Image[]; // type annotation
       })
     | null;
   categories: Category[];
@@ -92,7 +83,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
       }
     : {
         name: '',
-        images: [],
+        images: [], // watch carefully
         price: 0,
         categoryId: '',
         colorId: '',
